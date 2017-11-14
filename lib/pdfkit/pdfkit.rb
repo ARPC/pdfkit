@@ -56,6 +56,16 @@ class PDFKit
     PDFKit.configuration.wkhtmltopdf
   end
 
+  def to_processed_html
+    return nil unless @source.html?
+    original_source = @source.dup
+    preprocess_html
+    append_stylesheets
+    processed_source = @source
+    @source = original_source
+    processed_source
+  end
+
   def to_pdf(path=nil)
     preprocess_html
     append_stylesheets
