@@ -30,8 +30,6 @@ class PDFKit
     @protocol = options.delete(:protocol)
     @renderer = WkHTMLtoPDF.new options
     @renderer.normalize_options
-
-    raise NoExecutableError.new unless File.exists?(PDFKit.configuration.wkhtmltopdf)
   end
 
   def command(path = nil)
@@ -67,6 +65,7 @@ class PDFKit
   end
 
   def to_pdf(path=nil)
+    raise NoExecutableError.new unless File.exists?(PDFKit.configuration.wkhtmltopdf)
     preprocess_html
     append_stylesheets
 
